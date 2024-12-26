@@ -38,16 +38,18 @@ using Steamworks;
 
 namespace Nerfs;
 
-[BepInPlugin("LazyCowboy.MoreSlugcatsNerfs", "MoreSlugcats Nerfs", "1.0.7")]
+[BepInPlugin(MOD_ID, MOD_NAME, MOD_VERSION)]
 public partial class Nerfs : BaseUnityPlugin
 {
+    public const string MOD_ID = "LazyCowboy.MoreSlugcatsNerfs",
+        MOD_NAME = "MoreSlugcats Nerfs",
+        MOD_VERSION = "1.0.8";
+
     /*
      * Ideas (in order of priority):
-     * Rivulet 0 throwing ability
-     * Spearmaster configurable pip cost
-     * Saint tongue length
-     * Saint swing modifier
     */
+
+
     private static NerfsModOptions Options;
 
     public Nerfs()
@@ -1071,7 +1073,7 @@ public partial class Nerfs : BaseUnityPlugin
     }
     public void Spearmaster_Grow_Speed_Modifier(On.Player.orig_GrabUpdate orig, Player self, bool eu)
     {
-        if (self.SlugCatClass != MoreSlugcatsEnums.SlugcatStatsName.Spear || Options.SpearmasterGrowSpearExhaustion.Value <= 0f)
+        if (self.SlugCatClass != MoreSlugcatsEnums.SlugcatStatsName.Spear || Options.SpearmasterGrowSpeedModifier.Value != 1f)
         {
             orig(self, eu);
             return;
