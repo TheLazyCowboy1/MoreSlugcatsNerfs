@@ -43,7 +43,7 @@ public partial class Nerfs : BaseUnityPlugin
 {
     public const string MOD_ID = "LazyCowboy.MoreSlugcatsNerfs",
         MOD_NAME = "MoreSlugcats Nerfs",
-        MOD_VERSION = "1.0.8";
+        MOD_VERSION = "1.0.9";
 
     /*
      * Ideas (in order of priority):
