@@ -1073,7 +1073,7 @@ public partial class Nerfs : BaseUnityPlugin
     }
     public void Spearmaster_Grow_Speed_Modifier(On.Player.orig_GrabUpdate orig, Player self, bool eu)
     {
-        if (self.SlugCatClass != MoreSlugcatsEnums.SlugcatStatsName.Spear || Options.SpearmasterGrowSpeedModifier.Value != 1f)
+        if (self.SlugCatClass != MoreSlugcatsEnums.SlugcatStatsName.Spear || Options.SpearmasterGrowSpeedModifier.Value == 1f)
         {
             orig(self, eu);
             return;
