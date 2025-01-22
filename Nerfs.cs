@@ -12,6 +12,7 @@ using MoreSlugcatsEnums = MoreSlugcats.MoreSlugcatsEnums;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using MonoMod.RuntimeDetour;
+using RainMeadowCompat;
 
 #pragma warning disable CS0618
 
@@ -20,24 +21,30 @@ using MonoMod.RuntimeDetour;
 
 namespace Nerfs;
 
+//dependencies:
+//Rain Meadow:
+[BepInDependency(MeadowCompatSetup.RAIN_MEADOW_ID, BepInDependency.DependencyFlags.SoftDependency)]
+
 [BepInPlugin(MOD_ID, MOD_NAME, MOD_VERSION)]
 public partial class Nerfs : BaseUnityPlugin
 {
     public const string MOD_ID = "LazyCowboy.MoreSlugcatsNerfs",
         MOD_NAME = "MoreSlugcats Nerfs",
-        MOD_VERSION = "1.0.9";
+        MOD_VERSION = "1.1.0";
 
     /*
      * Ideas (in order of priority):
     */
 
 
+    public static Nerfs Instance;
     private static NerfsModOptions Options;
 
     public Nerfs()
     {
         try
         {
+            Instance = this;
             Options = new NerfsModOptions(this, Logger);
         }
         catch (Exception ex)
@@ -49,6 +56,8 @@ public partial class Nerfs : BaseUnityPlugin
     private void OnEnable()
     {
         On.RainWorld.OnModsInit += RainWorldOnOnModsInit;
+
+        RainMeadowCompat.MeadowCompatSetup.InitializeMeadowCompatibility();
     }
 
     BindingFlags propFlags = BindingFlags.Instance | BindingFlags.Public;
@@ -205,7 +214,7 @@ public partial class Nerfs : BaseUnityPlugin
             On.SlugcatStats.ctor += AllSlugcats_Stats_Modifiers;
 
             
-            MachineConnector.SetRegisteredOI("LazyCowboy.MoreSlugcatsNerfs", Options);
+            MachineConnector.SetRegisteredOI(MOD_ID, Options);
             IsInit = true;
         }
         catch (Exception ex)
@@ -1323,6 +1332,11 @@ public partial class Nerfs : BaseUnityPlugin
     {
         for (int i = 0; i < x; i++)
             Player_SubtractQuarterPip(player);
+    }
+
+    public static void LogSomething(object obj)
+    {
+        Instance.Logger.LogInfo(obj);
     }
     #endregion
 }

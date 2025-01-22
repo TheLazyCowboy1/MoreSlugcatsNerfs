@@ -77,6 +77,38 @@ public class NerfsModOptions : OptionInterface
         ArenaArtificerSpearSpeedModifier = this.config.Bind<float>("ArenaArtificerSpearSpeedModifier", 0.7f, new ConfigAcceptableRange<float>(0f, 5f));
         ArenaArtificerSpearSpeedEverywhere = this.config.Bind<bool>("ArenaArtificerSpearSpeedEverywhere", false);
 
+
+        //sync mod options
+        RainMeadowCompat.EasyConfigSync.RegisterConfigs(
+            GeneralArtificerSpearAngles,
+
+            GourmandSpeedModifier, GourmandEmptySpeedModifier, GourmandCraftingNerfs,
+            GourmandSlideModifier, GourmandSpearDamageModifier, GourmandExhaustionModifier,
+            GourmandEmptyExhaustionModifier,
+
+            ArtificerSpeedModifier, ArtificerThrowingAbility, ArtificerScavPopulationModifier,
+            ArtificerCraftingCost, ArtificerJumpModifier, ArtificerJumpFoodLoss,
+            ArtificerJumpFoodCost, ArtificerJumpsPerCost, ArtificerJumpRequiresFood,
+            ArtificerExtraParryCost, ArtificerExplosionStunPyroCost, ArtificerScavengerMeat,
+            ArtificerThrowAngle, ArtificerThrowAngleModifier, ArtificerBothEndings,
+
+            RivuletSpeedModifier, RivuletThrowingAbility, RivuletSlideModifier,
+            RivuletJumpModifier, RivuletCellSlowsCycles, RivuletCellRainIntensity,
+            RivuletCellCycleModifier, RivuletCellPrecycleChance, RivuletRotGrabModifier,
+
+            SpearmasterSpeedModifier, SpearmasterThrowingAbility, SpearmasterSpearsUntilCost,
+            SpearmasterPipsPerSpearCost, SpearmasterGrowSpearExhaustion, SpearmasterThrowSpearExhaustion,
+            SpearmasterBiteDeathChanceModifier, SpearmasterJumpModifier, SpearmasterGrowSpeedModifier,
+            SpearmasterNeedleDamageModifier,
+
+            SaintSpeedModifier, SaintTongueModifier, SaintTongueLengthModifier,
+            SaintSwingSpeedModifier, SaintTongueSwingModifier, SaintImproveTongueAim,
+            SaintSwallowedWarmthModifier, SaintLanternWarmthModifier, SaintObjectWarmthModifier,
+            SaintGodTimeModifier, SaintRechargeRateModifier,
+
+            ArenaArtificerSpearSpeedModifier, ArenaArtificerSpearSpeedEverywhere
+        );
+
     }
 
     //public readonly Configurable<float> PlayerSpeed;

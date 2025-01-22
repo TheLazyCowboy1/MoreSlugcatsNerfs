@@ -60,6 +60,9 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\REFERENCES\PUBLIC-Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Rain Meadow">
+      <HintPath>..\REFERENCES\Rain Meadow.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\REFERENCES\UnityEngine.dll</HintPath>
     </Reference>
