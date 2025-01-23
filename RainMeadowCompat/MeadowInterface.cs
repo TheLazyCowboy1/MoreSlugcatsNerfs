@@ -1,4 +1,5 @@
 ﻿using RainMeadow;
+using System;
 
 namespace RainMeadowCompat;
 
@@ -37,24 +38,16 @@ public class MeadowInterface
         catch { return; }
     }
 
-    /**<summary>
-     * Here is an example of safely getting information from Rain Meadow.
-     * In this hypothetical case:
-     * If Rain Meadow is enabled, and the player is not the host,
-     * I want the randomization process to be skipped.
-     * 
-     * So I call if (MeadowInterface.ShouldSkipRandomization()) return;
-     * Thus safely deciding whether or not to skip the process.
-     * </summary>
-     */
-    public static bool ShouldSkipRandomization()
+    public static OnlinePhysicalObject PlayerToOnlineObject(Player player)
     {
-        if (!MeadowCompatSetup.MeadowEnabled) return false;
-
-        try
-        {
-            return OnlineManager.lobby != null && !OnlineManager.lobby.isOwner;
-        }
-        catch { return false; }
+        return player.abstractPhysicalObject.GetOnlineObject();
     }
+
+    public static void InvokeSubtractQuarterPipRPC(Player player, int amount)
+    {
+        //new SubtractQuarterPipRPC().Invoke(true, PlayerToOnlineObject(player));
+        //InvokeRPC(true, Recipient.Clients, Recipient.Host, false, TestDelegateMethod, PlayerToOnlineObject(player), amount);
+        MoreSlugcatsNerfsRPCS.SubtractQuarterPip.InvokeRPC(false, PlayerToOnlineObject(player), amount);
+    }
+    
 }

@@ -30,7 +30,7 @@ public partial class Nerfs : BaseUnityPlugin
 {
     public const string MOD_ID = "LazyCowboy.MoreSlugcatsNerfs",
         MOD_NAME = "MoreSlugcats Nerfs",
-        MOD_VERSION = "1.1.0";
+        MOD_VERSION = "1.1.1";
 
     /*
      * Ideas (in order of priority):
@@ -1295,23 +1295,25 @@ public partial class Nerfs : BaseUnityPlugin
 
     #region HelperMethods
     //copied from Player.AddQuarterPip
-    public void Player_SubtractQuarterPip(Player player)
+    public void Player_SubtractQuarterPips(Player player, int amount, bool invokeRPC = true)
     {
         if (player.FoodInStomach < 1 && player.playerState.quarterFoodPoints < 1)
         {
             return;
         }
-        player.playerState.quarterFoodPoints--;
+
+        player.playerState.quarterFoodPoints -= amount;
         if (ModManager.CoopAvailable && player.abstractCreature.world.game.IsStorySession && player.abstractCreature.world.game.Players[0] != player.abstractCreature && !player.isNPC)
         {
             PlayerState playerState = player.abstractCreature.world.game.Players[0].state as PlayerState;
             //JollyCustom.Log(string.Format("Player add quarter food. Amount to add {0}", this.playerState.playerNumber), false);
-            playerState.quarterFoodPoints--;
+            playerState.quarterFoodPoints -= amount;
         }
         if (player.playerState.quarterFoodPoints < 0)
         {
             player.playerState.quarterFoodPoints += 4;
             player.SubtractFood(1);
+            amount -= 4;
         }
 
         try
@@ -1327,11 +1329,10 @@ public partial class Nerfs : BaseUnityPlugin
                 }
             }
         } catch (Exception ex) { Logger.LogError(ex); }
-    }
-    public void Player_SubtractQuarterPips(Player player, int x)
-    {
-        for (int i = 0; i < x; i++)
-            Player_SubtractQuarterPip(player);
+
+        //invoke RPC
+        if (invokeRPC)
+            SafeMeadowInterface.InvokeSubtractQuarterPipRPC(player, amount);
     }
 
     public static void LogSomething(object obj)

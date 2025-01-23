@@ -127,7 +127,8 @@ public class MeadowCompatSetup
      */
     private static void AddLobbyData(OnlineResource lobby)
     {
-        lobby.AddData(new ConfigData());
+        if (!lobby.TryGetData(out ConfigData currentConfigData))
+            lobby.AddData(new ConfigData());
 
         //lobby.AddData<ExampleData>(new ExampleData());
     }

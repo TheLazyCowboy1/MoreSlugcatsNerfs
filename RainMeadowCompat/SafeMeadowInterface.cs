@@ -27,7 +27,8 @@ public class SafeMeadowInterface
         try
         {
             MeadowCompatSetup.InitializeMeadowCompatibility();
-        } catch { }
+        }
+        catch { }
     }
 
     /**<summary>
@@ -41,7 +42,8 @@ public class SafeMeadowInterface
         try
         {
             MeadowCompatSetup.ModsInitialized();
-        } catch { }
+        }
+        catch { }
     }
 
     /**<summary>
@@ -53,8 +55,10 @@ public class SafeMeadowInterface
     {
         try
         {
-            MeadowCompatSetup.RemoveHooks();
-        } catch { }
+            if (MeadowCompatSetup.MeadowEnabled)
+                MeadowCompatSetup.RemoveHooks();
+        }
+        catch { }
     }
 
     /**<summary>
@@ -73,28 +77,19 @@ public class SafeMeadowInterface
     {
         try
         {
-            MeadowInterface.UpdateConfigData();
+            if (MeadowCompatSetup.MeadowEnabled)
+                MeadowInterface.UpdateConfigData();
         }
         catch { }
     }
 
-    /**<summary>
-     * Here is an example of safely getting information from Rain Meadow.
-     * In this hypothetical case:
-     * If Rain Meadow is enabled, and the player is not the host,
-     * I want the randomization process to be skipped.
-     * 
-     * So I call if (MeadowInterface.ShouldSkipRandomization()) return;
-     * Thus safely deciding whether or not to skip the process.
-     * </summary>
-     */
-    public static bool ShouldSkipRandomization()
+    public static void InvokeSubtractQuarterPipRPC(Player player, int amount)
     {
         try
         {
-            return MeadowInterface.ShouldSkipRandomization();
+            if (MeadowCompatSetup.MeadowEnabled)
+                MeadowInterface.InvokeSubtractQuarterPipRPC(player, amount);
         }
         catch { }
-        return false;
     }
 }
