@@ -30,7 +30,7 @@ public partial class Nerfs : BaseUnityPlugin
 {
     public const string MOD_ID = "LazyCowboy.MoreSlugcatsNerfs",
         MOD_NAME = "MoreSlugcats Nerfs",
-        MOD_VERSION = "1.1.1";
+        MOD_VERSION = "1.1.2";
 
     /*
      * Ideas (in order of priority):
@@ -318,7 +318,7 @@ public partial class Nerfs : BaseUnityPlugin
                 || resultType == MoreSlugcatsEnums.AbstractObjectType.Bullet
                 || resultType == MoreSlugcatsEnums.AbstractObjectType.EnergyCell
                 || resultType == MoreSlugcatsEnums.AbstractObjectType.FireEgg
-                || resultType == MoreSlugcatsEnums.AbstractObjectType.SingularityBomb
+                || resultType == DLCSharedEnums.AbstractObjectType.SingularityBomb
                 || resultType == MoreSlugcatsEnums.AbstractObjectType.MoonCloak
                 || resultType == AbstractPhysicalObject.AbstractObjectType.Creature) //ban any live creatures
             {
@@ -386,7 +386,8 @@ public partial class Nerfs : BaseUnityPlugin
     #region Artificer
     public void Artificer_Scav_Population_Modifier(On.WorldLoader.orig_AddSpawnersFromString orig, WorldLoader self, string[] line)
     {
-        if (!self.game.IsStorySession || self.game.StoryCharacter != MoreSlugcatsEnums.SlugcatStatsName.Artificer)
+        //Don't let it apply to non-story mode games, safari mode games, or non-Artificer campaigns
+        if (!self.game.IsStorySession || self.game.rainWorld.safariMode || self.game.StoryCharacter != MoreSlugcatsEnums.SlugcatStatsName.Artificer)
         {
             orig(self, line);
             return;
@@ -401,7 +402,7 @@ public partial class Nerfs : BaseUnityPlugin
             CreatureTemplate.Type type = WorldLoader.CreatureTypeFromString(array2[1]);
 
             bool changeMade = false;
-            if (type == CreatureTemplate.Type.Scavenger || type == MoreSlugcatsEnums.CreatureTemplateType.ScavengerElite)
+            if (type == CreatureTemplate.Type.Scavenger || type == DLCSharedEnums.CreatureTemplateType.ScavengerElite)
             {
                 for (int j = 2; j < array2.Length; j++)
                 {
@@ -1275,7 +1276,7 @@ public partial class Nerfs : BaseUnityPlugin
         {
             return;
         }
-        if (ModManager.MSC && self.room.blizzardGraphics != null && self.room.roomSettings.DangerType == MoreSlugcatsEnums.RoomRainDangerType.Blizzard && self.room.world.rainCycle.CycleProgression > 0f)
+        if (ModManager.MSC && self.room.blizzardGraphics != null && self.room.roomSettings.DangerType == DLCSharedEnums.RoomRainDangerType.Blizzard && self.room.world.rainCycle.CycleProgression > 0f)
         {
             foreach (IProvideWarmth provideWarmth in self.room.blizzardHeatSources)
             {
